@@ -1,0 +1,28 @@
+#!/bin/bash
+
+TARGET=${1:-""}
+
+./_source
+
+if [[ $TARGET != "" ]]; then
+    ANSWER=$(python python_scripts/get_entry.py --target=$TARGET)
+    
+    if [[ $ANSWER == "None" ]]; then
+        echo "No such target found"
+        exit 1
+    fi
+
+    USERNAME=$(echo $ANSWER | cut -d' ' -f 1)
+    IP=$(echo $ANSWER | cut -d' ' -f 2)
+    PASSWORD=$(echo $ANSWER | cut -d' ' -f 3)
+    ISPEM=$(echo $ANSWER | cut -d' ' -f 4)
+    
+    if [[ $ISPEM == "True" ]]; then
+        ssh -i $PASSWORD $USERNAME@$IP
+        exit 0
+    fi
+    
+    sshpass -p $PASSWORD ssh -C $USERNAME@$IP
+else
+    echo "Please specify target to connect to"
+fi

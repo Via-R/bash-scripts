@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./_source
+
+python python_scripts/clear_entries.py

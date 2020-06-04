@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TARGET=${1:-""}
+USERNAME=${2:-""}
+IP=${3:-""}
+PASSWORD=${4:-""}
+ISPEM=${5:-""}
+./_source
+
+if [[ $TARGET != "" && $PASSWORD != "" && $USERNAME != "" ]]; then
+    python python_scripts/insert_entry.py --target=$TARGET --ip=$IP --username=$USERNAME --password=$PASSWORD --is_pem=$ISPEM
+fi
