@@ -2,7 +2,7 @@
 
 TARGET=${1:-""}
 
-./_source
+source ./_source
 
 if [[ $TARGET != "" ]]; then
     ANSWER=$(python python_scripts/get_entry.py --target=$TARGET)
@@ -15,14 +15,15 @@ if [[ $TARGET != "" ]]; then
     USERNAME=$(echo $ANSWER | cut -d' ' -f 1)
     IP=$(echo $ANSWER | cut -d' ' -f 2)
     PASSWORD=$(echo $ANSWER | cut -d' ' -f 3)
-    ISPEM=$(echo $ANSWER | cut -d' ' -f 4)
+    PORT=$(echo $ANSWER | cut -d' ' -f 4)
+    ISPEM=$(echo $ANSWER | cut -d' ' -f 5)
     
     if [[ $ISPEM == "True" ]]; then
-        ssh -i $PASSWORD $USERNAME@$IP
+        ssh -i $PASSWORD $USERNAME@$IP -p $PORT
         exit 0
     fi
     
-    sshpass -p $PASSWORD ssh -C $USERNAME@$IP
+    sshpass -p $PASSWORD ssh $USERNAME@$IP -p $PORT
 else
     echo "Please specify target to connect to"
 fi

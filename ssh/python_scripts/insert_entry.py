@@ -6,6 +6,7 @@ parser.add_argument("--target", type=str, default=None, required=True)
 parser.add_argument("--ip", type=str, default=None, required=True)
 parser.add_argument("--username", type=str, default=None, required=True)
 parser.add_argument("--password", type=str, default=None, required=True)
+parser.add_argument("--port", type=int, default=22)
 parser.add_argument("--is_pem", type=bool, default=False)
 args = parser.parse_args()
 
@@ -26,7 +27,7 @@ with open(ssh_file, "r+") as frp:
     password = args.password
     if args.is_pem:
         password = f"{pem_folder}/{password}.pem"
-    db[args.target] = {"ip":args.ip, "username":args.username, "password":password, "is_pem":args.is_pem}
+    db[args.target] = {"ip":args.ip, "username":args.username, "password":password, "port":args.port, "is_pem":args.is_pem}
     frp.seek(0)
     frp.write(json.dumps(db))
     frp.close()

@@ -10,7 +10,7 @@ def read_entry():
         target = db.get(args.target)
         if target is None:
             return None
-        return f'{target["username"]} {target["ip"]} {target["password"]} {target["is_pem"]}'
+        return f"{target['username']} {target['ip']} {target['password']} {target['port']} {target['is_pem']}"
         f.close()
 
 print(read_entry())
